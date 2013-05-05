@@ -21,6 +21,13 @@ app.use(dispatch({
   }
 }));
 
+app.use(dispatch({
+  'GET /app.js' : function(req, res, next) {
+    res.setHeader('Content-Type', 'text/css');
+    res.end(js);
+  }
+}));
+
 template = fs.readFileSync('template.html');
 function renderUI(cb) {
   return cb(noErr, template);
@@ -31,6 +38,13 @@ css = (function() {
   var files = ['stylesheets/normalize.css', 'stylesheets/custom.css'];
   for (var i in files) { allCss += fs.readFileSync(files[i], 'utf8'); };
   return allCss;
+})();
+
+js = (function() {
+  var allJs = '';
+  var files = ['jquery.js', 'client.js'];
+  for (var i in files) { allJs += ";" + fs.readFileSync(files[i], 'utf8'); };
+  return allJs;
 })();
 
 port   = process.env.PORT != null ? process.env.PORT : 4000;
