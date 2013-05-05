@@ -1,0 +1,34 @@
+.colony {
+  margin: 5em auto;
+  min-width: 50em;
+  min-height: 50em;
+  border: 1px solid #3E6B85;
+}
+
+.colony td {
+  background: #C5D2DB;
+  border-bottom: 1px solid #3E6B85;
+  border-right: 1px solid #3E6B85;
+}
+
+.colony td.alive {
+  background: #F4921E;
+}
+
+.text-field {
+  border: 1px solid #3E6B85;
+  height: 2em;
+  padding: 0.4em;
+}
+
+.btn {
+  color: #FFF;
+  background: #3E6B85;
+  width: 12em;
+  height: 2em;
+  border: none;
+}
+
+.btn.grow, .btn.reset, .btn.pause {
+  display: none;
+}

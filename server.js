@@ -28,7 +28,7 @@ function renderUI(cb) {
 
 css = (function() {
   var allCss = '';
-  var files = ['stylesheets/normalize.css'];
+  var files = ['stylesheets/normalize.css', 'stylesheets/custom.css'];
   for (var i in files) { allCss += fs.readFileSync(files[i], 'utf8'); };
   return allCss;
 })();
