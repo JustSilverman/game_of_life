@@ -1,13 +1,13 @@
 $(document).ready(function(){
   var colonyModel = {}
-  colonyFormView.init($('.colony-form'), colonyModel);
-  colonyView.init($('.colony'), colonyModel, cellCollection);
+  colonyControllerView.init($('.colony-form'), cellCollection);
+  colonyView.init($('.colony'), cellCollection);
 });
 
-var colonyFormView = {
-  init: function(el, colonyModel) {
+var colonyControllerView = {
+  init: function(el, cellCollection) {
     this.$el = $(el);
-    this.model = colonyModel
+    this.collection = cellCollection;
     this.listen();
   },
 
@@ -16,76 +16,52 @@ var colonyFormView = {
     this.$el.find('.grow').on('click', this.grow.bind(this));
     this.$el.find('.pause').on('click', this.pause.bind(this));
     this.$el.find('.reset').on('click', this.reset.bind(this));
-    $(this.model).on('empty', this.reset.bind(this));
+    $(this.collection).on('empty', this.reset.bind(this));
   },
 
   setup: function() {
-    this.model.width  = parseInt(this.$el.find('.width').val());
-    this.model.height = parseInt(this.$el.find('.height').val());
-    $(this.model).trigger('setup');
+    this.collection.width  = parseInt(this.$el.find('.width').val());
+    this.collection.height = parseInt(this.$el.find('.height').val());
+    this.collection.init();
+    this.clear();
     this.$el.find('.grow').show();
   },
 
   grow: function() {
     this.$el.find('.setup, .grow').hide();
     this.$el.find('.reset, .pause').show();
-    $(this.model).trigger('grow');
+    this.collection.grow();
   },
 
   pause: function() {
     this.$el.find('.pause').hide();
     this.$el.find('.grow').show();
-    $(this.model).trigger('pause');
+    this.collection.pause();
   },
 
   reset: function() {
     this.$el.find('.setup, .grow').show();
     this.$el.find('.reset, .pause').hide();
-    $(this.model).trigger('reset');
+    this.collection.init();
+  },
+
+  clear: function() {
+    this.$el.find('.width').val('');
+    this.$el.find('.height').val('');
   }
 }
 
 var colonyView = {
-  init: function(el, colonyModel, collection) {
+  init: function(el, collection) {
     this.$el = $(el);
-    this.colonyModel = colonyModel;
     this.collection  = collection;
     this.listen();
   },
 
   listen: function() {
     this.$el.on('click', 'td', this.updateCell.bind(this));
-    $(this.colonyModel).on('setup', this.setup.bind(this));
-    $(this.colonyModel).on('grow', this.grow.bind(this));
-    $(this.colonyModel).on('pause', this.pause.bind(this));
-    $(this.colonyModel).on('reset', this.reset.bind(this));
+    $(this.collection).on('change', this.renderColony.bind(this));
     $(this.collection).on('toggledCell', this.activateCell.bind(this));
-    $(this.collection).on('aged', this.renderColony.bind(this));
-    $(this.collection).on('empty', this.empty.bind(this));
-  },
-
-  setup: function() {
-    this.collection.init(this.colonyModel);
-    this.renderColony();
-  },
-
-  grow: function() {
-    this.currentGen = setInterval(this.collection.grow.bind(this.collection), 150);
-  },
-
-  pause: function() {
-    clearInterval(this.currentGen);
-  },
-
-  reset: function() {
-    clearInterval(this.currentGen);
-    this.$el.find('td').removeClass("alive");
-    this.collection.init(this.colonyModel);
-  },
-
-  empty: function() {
-    this.reset();
-    $(this.colonyModel).trigger("empty");
   },
 
   updateCell: function(e) {
@@ -94,9 +70,9 @@ var colonyView = {
 
   renderColony: function() {
     this.clear();
-    for(var i=0, ii=this.colonyModel.height; i<ii; i++) {
+    for(var i=0, ii=this.collection.height; i<ii; i++) {
       var row = '<tr data-id="' + i + '"></tr>';
-      for(var j=0, jj=this.colonyModel.width; j<jj; j++) {
+      for(var j=0, jj=this.collection.width; j<jj; j++) {
         row = $(row).append(this.renderCell(this.collection.find(j, i)));
       }
       this.$el.append(row);
@@ -121,15 +97,14 @@ var colonyView = {
 }
 
 var cellCollection = {
-  init: function(data) {
+  init: function() {
     this.cells        = [];
     this.heightRange  = [];
     this.widthRange   = [];
-    this.width  = data.width;
-    this.height = data.height;
     for (var i=0, ii=this.height; i<ii; i++) { this.heightRange.push(i); }
     for (var i=0, ii=this.width; i<ii; i++) { this.widthRange.push(i); }
     this.load();
+    $(this).trigger('change');
   },
 
   load: function() {
@@ -148,11 +123,20 @@ var cellCollection = {
     $(this).trigger('toggledCell', this.find(col, row).toggle());
   },
 
-  grow: function(cb) {
-    this.updateNextGen();
-    this.growCells();
-    $(this).trigger('aged');
-    if(this.isEmpty()) $(this).trigger('empty');
+  grow: function() {
+    if(this.isEmpty()) { 
+      this.pause();
+      $(this).trigger('empty');
+    } else {
+      this.updateNextGen();
+      this.growCells();
+      $(this).trigger('change');
+      this.currentGen = setTimeout(this.grow.bind(this), 150); 
+    }
+  },
+
+  pause: function() {
+    clearTimeout(this.currentGen);
   },
 
   updateNextGen: function() {
@@ -202,13 +186,13 @@ var cellCollection = {
   topOrBottom: function(row) {
     if (row === this.height) return 0
     if (row < 0) return this.height - 1
-    return this.heightRange[row]
+    return row; 
   },
 
   leftOrRight: function(col) {
     if (col === this.width) return 0
     if (col < 0) return this.width - 1
-    return this.widthRange[col]
+    return col; 
   },
 
   isEmpty: function() {
