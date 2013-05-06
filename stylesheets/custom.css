@@ -1,3 +1,46 @@
+.left-col {
+  display: inline-block;
+  float: left;
+  min-width: 100em;
+  height: 100%;
+}
+
+.right-col {
+  display: inline-block;
+  float: right;
+  background: #C5D2DB;
+  min-width: 15em;
+  height: 100%;
+  font-size: 3em;
+}
+
+.how-to {
+  margin: 0;
+  padding: 0em 1em 0.5em 1em;
+}
+
+.how-to .title {
+  margin: 0;
+  padding: 0.6em;
+  text-align: center;
+}
+
+.how-to h3 {
+  color: #333;
+  margin: 0 0 0.25em 0;
+}
+
+.how-to ul {
+  color: #333;
+  margin: 0.5em;
+  padding-left: 1.75em;
+}
+
+.colony-form {
+  margin: 0 auto;
+  width: 100%;
+}
+
 .colony {
   margin: 5em auto;
   min-width: 50em;
@@ -17,16 +60,19 @@
 
 .text-field {
   border: 1px solid #3E6B85;
-  height: 2em;
+  width: 12em;
+  height: 3em;
   padding: 0.4em;
+  font-size: 3em;
 }
 
 .btn {
   color: #FFF;
   background: #3E6B85;
   width: 12em;
-  height: 2em;
+  height: 3em;
   border: none;
+  font-size: 3em;
 }
 
 .btn.grow, .btn.reset, .btn.pause {

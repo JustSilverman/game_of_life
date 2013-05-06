@@ -7,12 +7,30 @@
   <fieldset class="colony-form">
     <input class="text-field width" name="width" placeholder="Colony columns" type="text"/>
     <input class="text-field height" name="height" placeholder="Colony rows" type="text"/>
-    <button class="btn setup">Draw colony</button>
+    <button class="btn setup">Create colony</button>
     <button class="btn reset">Reset colony</button>
     <button class="btn grow">Grow!</button>
     <button class="btn pause">Pause growth</button>
   </fieldset>
-  <table class="colony">
-  </table>
+  <div class="left-col">
+    <table class="colony">
+    </table>
+  </div>
+  <div class="right-col">
+    <div class="how-to">
+      <h2 class="title">Conway's Game of Life</h2>
+      <h3>Game setup</h3>
+      <ul>
+        <li>Select the colony size and create it</li>
+        <li>Click on cells to bring them to life</li>
+        <li>Click 'Grow!' and watch the cells do the polka</li>
+      </ul>
+      <h3>Rules of engagement</h3>
+      <ul>
+        <li>Dead cells spawn if they have exactly 3 live neighbors</li>
+        <li>Live cells die if they have less than 2 or more than 3 live neighbors</li>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>
