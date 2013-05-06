@@ -49,7 +49,7 @@ var colonyView = {
   init: function(el, colonyModel, collection) {
     this.$el = $(el);
     this.colonyModel = colonyModel;
-    this.collection = collection;
+    this.collection  = collection;
     this.listen();
   },
 
@@ -70,7 +70,7 @@ var colonyView = {
   },
 
   grow: function() {
-    this.currentGen = setInterval(this.collection.grow.bind(this.collection), 250);
+    this.currentGen = setInterval(this.collection.grow.bind(this.collection), 150);
   },
 
   pause: function() {
@@ -80,6 +80,7 @@ var colonyView = {
   reset: function() {
     clearInterval(this.currentGen);
     this.$el.find('td').removeClass("alive");
+    this.collection.init(this.colonyModel);
   },
 
   empty: function() {
