@@ -14,27 +14,6 @@
   font-size: 3em;
 }
 
-.how-to {
-  margin: 0;
-  padding: 0em 1em 0.5em 1em;
-}
-
-.how-to .title {
-  margin: 0;
-  padding: 0.6em;
-  text-align: center;
-}
-
-.how-to h3 {
-  color: #333;
-  margin: 0 0 0.25em 0;
-}
-
-.how-to ul {
-  color: #333;
-  margin: 0.5em;
-  padding-left: 1.75em;
-}
 
 .colony-form {
   margin: 0 auto;
@@ -75,6 +54,36 @@
   font-size: 3em;
 }
 
+.error {
+  display: none;
+  color: #F00;
+  font-size: 2.75em;
+  margin: 0;
+  line-height: 0;
+}
+
 .btn.grow, .btn.reset, .btn.pause {
   display: none;
+}
+
+.how-to {
+  margin: 0;
+  padding: 0em 1em 0.5em 1em;
+}
+
+.how-to .title {
+  margin: 0;
+  padding: 0.6em;
+  text-align: center;
+}
+
+.how-to h3 {
+  color: #333;
+  margin: 0 0 0.25em 0;
+}
+
+.how-to ul {
+  color: #333;
+  margin: 0.5em;
+  padding-left: 1.75em;
 }

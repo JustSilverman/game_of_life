@@ -19,12 +19,25 @@ var colonyControllerView = {
     $(this.collection).on('empty', this.reset.bind(this));
   },
 
+  width: function() {
+    return parseInt(this.$el.find('.width').val());
+  },
+  
+  height: function() {
+    return parseInt(this.$el.find('.height').val());
+  },
+
   setup: function() {
-    this.collection.width  = parseInt(this.$el.find('.width').val());
-    this.collection.height = parseInt(this.$el.find('.height').val());
-    this.collection.init();
-    this.clear();
-    this.$el.find('.grow').show();
+    if (this.valid()) {
+      this.$el.find('.error').hide();
+      this.collection.width  = this.width();
+      this.collection.height = this.height();
+      this.collection.init();
+      this.clear();
+      this.$el.find('.grow').show();
+    } else {
+      return this.showError()
+    }
   },
 
   grow: function() {
@@ -48,6 +61,22 @@ var colonyControllerView = {
   clear: function() {
     this.$el.find('.width').val('');
     this.$el.find('.height').val('');
+  },
+
+  valid: function() {
+    return (this.validType() && this.validValues()) 
+  },
+
+  showError: function() {
+    this.$el.find('.error').show().css('display', 'inline-block');
+  },
+
+  validType: function() {
+    return (typeof this.width() === 'number' && typeof this.height() === 'number');
+  },
+
+  validValues: function() {
+    return (this.width() > 2 && this.height() > 2);
   }
 }
 
