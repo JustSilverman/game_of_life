@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  var colonyModel = {}
   colonyControllerView.init($('.colony-form'), cellCollection);
   colonyView.init($('.colony'), cellCollection);
 });
@@ -22,7 +21,7 @@ var colonyControllerView = {
   width: function() {
     return parseInt(this.$el.find('.width').val());
   },
-  
+
   height: function() {
     return parseInt(this.$el.find('.height').val());
   },
