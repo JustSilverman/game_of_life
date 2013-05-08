@@ -1,17 +1,20 @@
 .left-col {
   display: inline-block;
   float: left;
-  min-width: 100em;
+  min-width: 55em;
   height: 100%;
 }
 
 .right-col {
+  position: relative;
+  right: 0;
+  top: 0;
   display: inline-block;
   float: right;
   background: #C5D2DB;
   min-width: 15em;
-  height: 100%;
-  font-size: 3em;
+  height: 70em;
+  font-size: 0.8em;
 }
 
 
@@ -21,9 +24,9 @@
 }
 
 .colony {
-  margin: 5em auto;
-  min-width: 50em;
-  min-height: 50em;
+  margin: 2.5em auto;
+  width: 30em;
+  height: 30em;
   border: 1px solid #3E6B85;
 }
 
@@ -39,19 +42,18 @@
 
 .text-field {
   border: 1px solid #3E6B85;
-  width: 12em;
-  height: 3em;
+  width: 8em;
+  height: 1em;
   padding: 0.4em;
-  font-size: 3em;
 }
 
 .btn {
   color: #FFF;
   background: #3E6B85;
-  width: 12em;
-  height: 3em;
+  width: 8em;
+  height: 1.9em;
+  line-height: 1.7em;
   border: none;
-  font-size: 3em;
 }
 
 .error {
